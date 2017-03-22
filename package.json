@@ -1,0 +1,39 @@
+{
+  "directories": {
+    "test": "test"
+  },
+  "author": "azu",
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "name": "textlint-rule-period-in-list-item",
+  "version": "1.0.0",
+  "description": "textlint rule that check with or without period in list item.",
+  "main": "lib/textlint-rule-period-in-list-item.js",
+  "scripts": {
+    "test": "textlint-scripts test",
+    "prepublish": "npm run --if-present build",
+    "build": "textlint-scripts build",
+    "watch": "textlint-scripts build --watch"
+  },
+  "keywords": [
+    "textlintrule"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azu/textlint-rule-period-in-list-item.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azu/textlint-rule-period-in-list-item/issues"
+  },
+  "homepage": "https://github.com/azu/textlint-rule-period-in-list-item",
+  "devDependencies": {
+    "textlint-scripts": "^1.2.2"
+  },
+  "dependencies": {
+    "check-ends-with-period": "^1.0.1"
+  }
+}
