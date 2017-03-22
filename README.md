@@ -46,7 +46,7 @@ textlint --rule period-in-list-item README.md
 
 ## Options
 
-```json
+```json5
 {
     // prefer to use period mark.
     // "" (default is no period)
