@@ -1,6 +1,31 @@
 // MIT © 2017 azu
 "use strict";
 const checkEndsWithPeriod = require("check-ends-with-period");
+/**
+ * check `text` that the end is not periodMark
+ * @param {string} text
+ * @param {string[]} periodMarks
+ * @returns {{valid: boolean, periodMark: string, index: number}}
+ */
+const checkEndsWithoutPeriodMark = (text, periodMarks) => {
+    const { periodMark, index } = checkEndsWithPeriod(text, {
+        periodMarks
+    });
+    // actually periodMark is at end.
+    const isPeriodMarkAtEnd = periodMarks.indexOf(periodMark) !== -1;
+    if (isPeriodMarkAtEnd) {
+        return {
+            valid: false,
+            periodMark,
+            index
+        };
+    }
+    return {
+        valid: true,
+        periodMark,
+        index
+    };
+};
 const defaultOptions = {
     // prefer to use period mark.
     // "" (default is no period)
@@ -35,47 +60,48 @@ const reporter = (context, options = {}) => {
     return {
         [Syntax.ListItem](node){
             const text = getSource(node);
+            // Prefer no needed period, but exist period
+            if (isNotNeededPeriodMark) {
+                const { valid, periodMark, index } = checkEndsWithoutPeriodMark(text, periodMarks);
+                if (valid) {
+                    return;
+                }
+                // should be remove period mark
+                report(node, new RuleError(`Should remove period mark("${periodMark}") at end of list item.`, {
+                    index,
+                    fix: fixer.replaceTextRange([index, index + periodMark.length], "")
+                }));
+                return;
+            }
             const { valid, periodMark, index } = checkEndsWithPeriod(text, {
                 periodMarks,
                 allowPeriodMarks,
                 allowEmoji,
             });
-            // Prefer no needed period, but exist period
-            if (isNotNeededPeriodMark) {
-                if (valid) {
-                    // should be remove period mark
-                    report(node, new RuleError(`Should remove period mark("${periodMark}") at end of list item.`, {
-                        index,
-                        fix: fixer.replaceTextRange([index, index + periodMark.length], "")
-                    }));
+            // Prefer to use period
+            if (valid) {
+                //  but exist difference period
+                if (periodMark === preferPeriodMark) {
                     return;
                 }
+                report(node, new RuleError(`Prefer to use period mark("${preferPeriodMark}") at end of list item.`, {
+                    index,
+                    fix: fixer.replaceTextRange([index, index + periodMark.length], preferPeriodMark)
+                }));
+                return;
             } else {
-                // Prefer to use period
-                if (valid) {
-                    //  but exist difference period
-                    if (periodMark === preferPeriodMark) {
-                        return;
-                    }
-                    report(node, new RuleError(`Prefer to use period mark("${preferPeriodMark}") at end of list item.`, {
+                // but not exist period
+                if (forceAppendPeriod) {
+                    report(node, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
                         index,
-                        fix: fixer.replaceTextRange([index, index + periodMark.length], preferPeriodMark)
+                        fix: fixer.replaceTextRange([index + 1, index + 1], preferPeriodMark)
                     }));
-                    return;
                 } else {
-                    // but not exist period
-                    if (forceAppendPeriod) {
-                        report(node, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
-                            index,
-                            fix: fixer.replaceTextRange([index + 1, index + 1], preferPeriodMark)
-                        }));
-                    } else {
-                        report(node, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
-                            index
-                        }))
-                    }
-
+                    report(node, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
+                        index
+                    }))
                 }
+
             }
         }
     }
