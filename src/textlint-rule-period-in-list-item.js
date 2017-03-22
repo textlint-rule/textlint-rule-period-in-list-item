@@ -1,5 +1,6 @@
 // MIT © 2017 azu
 "use strict";
+const select = require('unist-util-select');
 const checkEndsWithPeriod = require("check-ends-with-period");
 /**
  * check `text` that the end is not periodMark
@@ -34,6 +35,10 @@ const defaultOptions = {
     // Built-in recognized period mark list
     // if the period of the text is not `periodMark` and it is a string in the `periodMarks`,
     "periodMarks": [".", "。", "．"],
+    // Ignore only link tag
+    // - [text](link)
+    // It is not needed period mark
+    "ignoreLinkEnd": true,
     // allow exception period mark list at end of the list item
     // Ignore this period mark
     "allowPeriodMarks": [],
@@ -47,10 +52,14 @@ const reporter = (context, options = {}) => {
     const { Syntax, RuleError, report, fixer, getSource } = context;
     const preferPeriodMark = options.periodMark || defaultOptions.periodMark;
     const isNotNeededPeriodMark = preferPeriodMark === "";
+    // always `preferPeriodMark` is added to periodMarks
     const periodMarks = (options.periodMarks || defaultOptions.periodMarks).concat(preferPeriodMark);
     const allowPeriodMarks = options.allowPeriodMarks !== undefined
         ? options.allowPeriodMarks
         : defaultOptions.allowPeriodMarks;
+    const ignoreLinkEnd = options.ignoreLinkEnd !== undefined
+        ? options.ignoreLinkEnd
+        : defaultOptions.ignoreLinkEnd;
     const allowEmoji = options.allowEmoji !== undefined
         ? options.allowEmoji
         : defaultOptions.allowEmoji;
@@ -73,6 +82,14 @@ const reporter = (context, options = {}) => {
                 }));
                 return;
             }
+            // - [link](http://example)
+            // should be ignored
+            if (ignoreLinkEnd) {
+                const linkNodes = select(node, `${Syntax.Paragraph} > *`);
+                if (linkNodes.length === 1 && linkNodes[0].type === Syntax.Link) {
+                    return;
+                }
+            }
             const { valid, periodMark, index } = checkEndsWithPeriod(text, {
                 periodMarks,
                 allowPeriodMarks,
@@ -81,6 +98,13 @@ const reporter = (context, options = {}) => {
             // Prefer to use period
             if (valid) {
                 //  but exist difference period
+                const isPeriodMarkAtEnd = periodMarks.indexOf(periodMark) !== -1;
+                // exception case that should not report
+                // !?
+                if (!isPeriodMarkAtEnd) {
+                    return;
+                }
+                // periodMark is expected, then exit
                 if (periodMark === preferPeriodMark) {
                     return;
                 }

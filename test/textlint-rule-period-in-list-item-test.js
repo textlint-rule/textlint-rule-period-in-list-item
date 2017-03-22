@@ -22,6 +22,13 @@ tester.run("textlint-rule-period-in-list-item", rule, {
             }
         },
         {
+            text: `- [text](http://example.com)`,
+            options: {
+                ignoreOnlyLink: true,
+                periodMark: "."
+            }
+        },
+        {
             text: `
 - item1。
 - item2。
@@ -84,6 +91,20 @@ tester.run("textlint-rule-period-in-list-item", rule, {
                     "message": `Not exist period mark(".") at end of list item.`,
                     line: 1,
                     column: 7
+                }
+            ]
+        },
+        {
+            text: `- [text](http://example.com) is bad`,
+            options: {
+                ignoreOnlyLink: true,
+                periodMark: "."
+            },
+            errors: [
+                {
+                    "message": `Not exist period mark(".") at end of list item.`,
+                    line: 1,
+                    column: 35
                 }
             ]
         },

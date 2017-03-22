@@ -55,6 +55,10 @@ textlint --rule period-in-list-item README.md
     // Built-in recognized period mark list
     // if the period of the text is not `periodMark` and it is a string in the `periodMarks`,
     "periodMarks": [".", "。", "．"],
+    // Ignore only link tag
+    // - [text](link)
+    // It is not needed period mark
+    "ignoreLinkEnd": true,
     // allow exception period mark list at end of the list item
     // Ignore this period mark
     "allowPeriodMarks": [],

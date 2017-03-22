@@ -34,6 +34,7 @@
     "textlint-scripts": "^1.2.2"
   },
   "dependencies": {
-    "check-ends-with-period": "^1.0.1"
+    "check-ends-with-period": "^1.0.1",
+    "unist-util-select": "^1.5.0"
   }
 }
