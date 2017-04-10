@@ -102,6 +102,10 @@ Automatically, force append periodMark.
 - item.
 ```
 
+## Related
+
+- [textlint-ja/textlint-rule-ja-no-mixed-period: 文末の句点(。)の統一 と 抜けをチェックするtextlintルール](https://github.com/textlint-ja/textlint-rule-ja-no-mixed-period/ "textlint-ja/textlint-rule-ja-no-mixed-period: 文末の句点(。)の統一 と 抜けをチェックするtextlintルール")
+
 ## Changelog
 
 See [Releases page](https://github.com/azu/textlint-rule-period-in-list-item/releases).
