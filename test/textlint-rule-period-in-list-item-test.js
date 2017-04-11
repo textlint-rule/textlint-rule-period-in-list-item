@@ -16,6 +16,18 @@ tester.run("textlint-rule-period-in-list-item", rule, {
             }
         },
         {
+            text: `- text!`,
+            options: {
+                periodMark: ""
+            }
+        },
+        {
+            text: `- text!`,
+            options: {
+                periodMark: "。"
+            }
+        },
+        {
             text: `- [text](http://example.com)`,
             options: {
                 periodMark: ""
