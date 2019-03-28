@@ -60,6 +60,17 @@ tester.run("textlint-rule-period-in-list-item", rule, {
                 periodMark: "."
             }
         },
+        // allowOrderedList
+        {
+            text: `
+1. item1.
+2. item2.
+3. item3.
+`,
+            options: {
+                allowOrderedList: true
+            }
+        },
 
     ],
     invalid: [
@@ -72,6 +83,23 @@ tester.run("textlint-rule-period-in-list-item", rule, {
                     "message": `Should remove period mark(".") at end of list item.`,
                     line: 1,
                     column: 8
+                }
+            ]
+        },
+        {
+            text: `
+1. item1
+2. item2
+3. item3.
+`,
+            options: {
+                allowOrderedList: false
+            },
+            errors: [
+                {
+                    "message": `Should remove period mark(".") at end of list item.`,
+                    line: 4,
+                    column: 9
                 }
             ]
         },

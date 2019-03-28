@@ -9,7 +9,7 @@ const checkEndsWithPeriod = require("check-ends-with-period");
  * @returns {{valid: boolean, periodMark: string, index: number}}
  */
 const checkEndsWithoutPeriodMark = (text, periodMarks) => {
-    const { periodMark, index } = checkEndsWithPeriod(text, {
+    const {periodMark, index} = checkEndsWithPeriod(text, {
         periodMarks
     });
     // actually periodMark is at end.
@@ -27,6 +27,14 @@ const checkEndsWithoutPeriodMark = (text, periodMarks) => {
         index
     };
 };
+/**
+ * Return true if parent node is Ordered List
+ * @param node
+ * @returns {boolean}
+ */
+const isItemNodeInOrderedList = (node) => {
+    return node && node.parent && node.parent.ordered === true;
+};
 const defaultOptions = {
     // prefer to use period mark.
     // "" (default is no period)
@@ -39,17 +47,21 @@ const defaultOptions = {
     // - [text](link)
     // It is not needed period mark
     "ignoreLinkEnd": true,
-    // allow exception period mark list at end of the list item
+    // define exception period mark list at end of the list item
     // Ignore this period mark
     "allowPeriodMarks": [],
     // Allow emoji at end of the list item
     "allowEmoji": false,
+    // Allow ordered list item
+    // 1. ~.
+    // 2. ~.
+    "allowOrderedList": false,
     // If not exist `periodMark` at end of the list item
     // Automatically, append `periodMark` when does textlint --fix
     "forceAppendPeriod": false
 };
 const reporter = (context, options = {}) => {
-    const { Syntax, RuleError, report, fixer, getSource } = context;
+    const {Syntax, RuleError, report, fixer, getSource} = context;
     const preferPeriodMark = options.periodMark || defaultOptions.periodMark;
     const isNotNeededPeriodMark = preferPeriodMark === "";
     // always `preferPeriodMark` is added to periodMarks
@@ -63,15 +75,22 @@ const reporter = (context, options = {}) => {
     const allowEmoji = options.allowEmoji !== undefined
         ? options.allowEmoji
         : defaultOptions.allowEmoji;
+    const allowOrderedList = options.allowOrderedList !== undefined
+        ? options.allowOrderedList
+        : defaultOptions.allowOrderedList;
     const forceAppendPeriod = options.forceAppendPeriod !== undefined
         ? options.forceAppendPeriod
         : defaultOptions.forceAppendPeriod;
     return {
-        [Syntax.ListItem](node){
+        [Syntax.ListItem](node) {
             const text = getSource(node);
+            // Skip Ordered List item if option is enabled
+            if (allowOrderedList && isItemNodeInOrderedList(node)) {
+                return;
+            }
             // Prefer no needed period, but exist period
             if (isNotNeededPeriodMark) {
-                const { valid, periodMark, index } = checkEndsWithoutPeriodMark(text, periodMarks);
+                const {valid, periodMark, index} = checkEndsWithoutPeriodMark(text, periodMarks);
                 if (valid) {
                     return;
                 }
@@ -90,7 +109,7 @@ const reporter = (context, options = {}) => {
                     return;
                 }
             }
-            const { valid, periodMark, index } = checkEndsWithPeriod(text, {
+            const {valid, periodMark, index} = checkEndsWithPeriod(text, {
                 periodMarks,
                 allowPeriodMarks,
                 allowEmoji,

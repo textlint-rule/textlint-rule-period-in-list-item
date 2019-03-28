@@ -59,11 +59,15 @@ textlint --rule period-in-list-item README.md
     // - [text](link)
     // It is not needed period mark
     "ignoreLinkEnd": true,
-    // allow exception period mark list at end of the list item
+    // define exception period mark list at end of the list item
     // Ignore this period mark
     "allowPeriodMarks": [],
     // Allow emoji at end of the list item
     "allowEmoji": false,
+    // Allow ordered list item
+    // 1. ~.
+    // 2. ~.
+    "allowOrderedList": false,
     // If not exist `periodMark` at end of the list item
     // Automatically, append `periodMark` when does textlint --fix
     "forceAppendPeriod": false
