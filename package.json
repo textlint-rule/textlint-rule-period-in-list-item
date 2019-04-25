@@ -24,12 +24,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/azu/textlint-rule-period-in-list-item.git"
+    "url": "https://github.com/textlint-rule/textlint-rule-period-in-list-item.git"
   },
   "bugs": {
-    "url": "https://github.com/azu/textlint-rule-period-in-list-item/issues"
+    "url": "https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues"
   },
-  "homepage": "https://github.com/azu/textlint-rule-period-in-list-item",
+  "homepage": "https://github.com/textlint-rule/textlint-rule-period-in-list-item",
   "devDependencies": {
     "textlint-scripts": "^1.2.2"
   },

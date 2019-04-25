@@ -1,4 +1,4 @@
-# textlint-rule-period-in-list-item [![Build Status](https://travis-ci.org/azu/textlint-rule-period-in-list-item.svg?branch=master)](https://travis-ci.org/azu/textlint-rule-period-in-list-item) [![textlint rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/) 
+# textlint-rule-period-in-list-item [![Build Status](https://travis-ci.org/textlint-rule/textlint-rule-period-in-list-item.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-period-in-list-item) [![textlint rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/) 
 
 textlint rule that check with or without period in list item.
 
@@ -112,7 +112,7 @@ Automatically, force append periodMark.
 
 ## Changelog
 
-See [Releases page](https://github.com/azu/textlint-rule-period-in-list-item/releases).
+See [Releases page](https://github.com/textlint-rule/textlint-rule-period-in-list-item/releases).
 
 ## Running tests
 
@@ -124,7 +124,7 @@ Install devDependencies and Run `npm test`:
 
 Pull requests and stars are always welcome.
 
-For bugs and feature requests, [please create an issue](https://github.com/azu/textlint-rule-period-in-list-item/issues).
+For bugs and feature requests, [please create an issue](https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues).
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
