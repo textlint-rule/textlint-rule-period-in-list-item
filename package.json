@@ -10,7 +10,7 @@
     "src/"
   ],
   "name": "textlint-rule-period-in-list-item",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "textlint rule that check with or without period in list item.",
   "main": "lib/textlint-rule-period-in-list-item.js",
   "scripts": {
