@@ -88,12 +88,12 @@ const reporter = (context, options = {}) => {
             if (!Array.isArray(PragraphNodes)){
                 return;
             }
+            // Skip Ordered List item if option is enabled
+            if (allowOrderedList && isItemNodeInOrderedList(node)) {
+                return;
+            }
             PragraphNodes.forEach(ParagraphNode => {
                 const text = getSource(ParagraphNode);
-                // Skip Ordered List item if option is enabled
-                if (allowOrderedList && isItemNodeInOrderedList(ParagraphNode)) {
-                    return;ParagraphNode
-                }
                 // Prefer no needed period, but exist period
                 if (isNotNeededPeriodMark) {
                     const { valid, periodMark, index } = checkEndsWithoutPeriodMark(text, periodMarks);
