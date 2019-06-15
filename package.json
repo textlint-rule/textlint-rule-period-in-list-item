@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/textlint-rule/textlint-rule-period-in-list-item",
   "devDependencies": {
-    "textlint-scripts": "^1.2.2"
+    "textlint-scripts": "^2.1.0"
   },
   "dependencies": {
     "check-ends-with-period": "^1.0.1"
