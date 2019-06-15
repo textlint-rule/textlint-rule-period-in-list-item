@@ -71,7 +71,25 @@ tester.run("textlint-rule-period-in-list-item", rule, {
                 allowOrderedList: true
             }
         },
+        // https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues/3
+        {
+            text: `
+- list item 1.
 
+    A paragraph describing this list item 1.
+
+- list item 2.
+
+    A paragraph describing this list item.
+
+- list item 3.
+
+    Another paragraph describing list item 3.
+`,
+            options: {
+                periodMark: "."
+            }
+        },
     ],
     invalid: [
         // remove period mark
@@ -182,6 +200,26 @@ tester.run("textlint-rule-period-in-list-item", rule, {
                     column: 8
                 }
             ]
-        }
+        },
+        // https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues/3
+        {
+            text: `
+- list item 1
+
+    A paragraph describing this list item 1.
+
+- list item 2
+
+    A paragraph describing this list item.
+
+- list item 3
+
+    Another paragraph describing list item 3.
+`,
+            options: {
+                periodMark: "."
+            },
+            errors: [{ line: 2, column: 13 }, { line: 6, column: 13 }, { line: 10, column: 13 }]
+        },
     ]
 });
