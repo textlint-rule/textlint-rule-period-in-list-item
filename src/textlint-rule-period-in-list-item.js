@@ -91,8 +91,8 @@ const reporter = (context, options = {}) => {
             PragraphNodes.forEach(ParagraphNode => {
                 const text = getSource(ParagraphNode);
                 // Skip Ordered List item if option is enabled
-                if (allowOrderedList && isItemNodeInOrderedList(node)) {
-                    return;
+                if (allowOrderedList && isItemNodeInOrderedList(ParagraphNode)) {
+                    return;ParagraphNode
                 }
                 // Prefer no needed period, but exist period
                 if (isNotNeededPeriodMark) {
