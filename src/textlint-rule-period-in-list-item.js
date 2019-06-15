@@ -82,6 +82,8 @@ const reporter = (context, options = {}) => {
         : defaultOptions.forceAppendPeriod;
     return {
         [Syntax.ListItem](node) {
+            // A ListItem should includes child nodes.
+            // https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues/3
             const PragraphNodes = node.children;
             if (!Array.isArray(PragraphNodes)){
                 return;
