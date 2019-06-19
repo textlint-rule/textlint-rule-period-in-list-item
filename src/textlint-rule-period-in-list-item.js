@@ -9,9 +9,7 @@ const checkEndsWithPeriod = require("check-ends-with-period");
  * @returns {{valid: boolean, periodMark: string, index: number}}
  */
 const checkEndsWithoutPeriodMark = (text, periodMarks) => {
-    const {periodMark, index} = checkEndsWithPeriod(text, {
-        periodMarks
-    });
+    const {periodMark, index} = checkEndsWithPeriod(text);
     // actually periodMark is at end.
     const isPeriodMarkAtEnd = periodMarks.indexOf(periodMark) !== -1;
     if (isPeriodMarkAtEnd) {
@@ -90,7 +88,9 @@ const reporter = (context, options = {}) => {
             }
             // Prefer no needed period, but exist period
             if (isNotNeededPeriodMark) {
-                const {valid, periodMark, index} = checkEndsWithoutPeriodMark(text, periodMarks);
+                const pureText = text.split("\n");
+                const listText = pureText[0];
+                const {valid, periodMark, index} = checkEndsWithoutPeriodMark(listText, periodMarks);
                 if (valid) {
                     return;
                 }

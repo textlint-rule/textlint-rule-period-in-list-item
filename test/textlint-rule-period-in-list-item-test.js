@@ -30,7 +30,8 @@ tester.run("textlint-rule-period-in-list-item", rule, {
         {
             text: `- [text](http://example.com)`,
             options: {
-                periodMark: ""
+                periodMark: "",
+                ignoreOnlyLink: false
             }
         },
         {
@@ -42,12 +43,31 @@ tester.run("textlint-rule-period-in-list-item", rule, {
         },
         {
             text: `
-- item1。
-- item2。
-- item3。
+- item1
+- item2
+- item3
 `,
             options: {
-                periodMark: "。"
+                periodMark: ""
+            }
+        },
+        {
+            text: `
+- item1
+
+    this is first item.
+
+- item2
+
+    this is second item.
+
+- item3
+
+    this is third item.
+
+`,
+            options: {
+                periodMark: ""
             }
         },
         {
@@ -63,9 +83,9 @@ tester.run("textlint-rule-period-in-list-item", rule, {
         // allowOrderedList
         {
             text: `
-1. item1.
-2. item2.
-3. item3.
+1. item1
+2. item2
+3. item3
 `,
             options: {
                 allowOrderedList: true
