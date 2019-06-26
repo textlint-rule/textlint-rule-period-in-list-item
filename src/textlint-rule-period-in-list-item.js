@@ -9,8 +9,8 @@ const checkEndsWithPeriod = require("check-ends-with-period");
  * @returns {{valid: boolean, periodMark: string, index: number}}
  */
 const checkEndsWithoutPeriodMark = (text, periodMarks) => {
-    const {periodMark, index} = checkEndsWithPeriod(text, {	    
-        periodMarks	
+    const {periodMark, index} = checkEndsWithPeriod(text, {
+        periodMarks
     });
     // actually periodMark is at end.
     const isPeriodMarkAtEnd = periodMarks.indexOf(periodMark) !== -1;
