@@ -82,76 +82,74 @@ const reporter = (context, options = {}) => {
         : defaultOptions.forceAppendPeriod;
     return {
         [Syntax.ListItem](node) {
-            // A ListItem should includes child nodes.
-            // https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues/3
-            const PragraphNodes = node.children;
-            if (!Array.isArray(PragraphNodes)){
-                return;
-            }
             // Skip Ordered List item if option is enabled
             if (allowOrderedList && isItemNodeInOrderedList(node)) {
                 return;
             }
-            PragraphNodes.forEach(ParagraphNode => {
-                const text = getSource(ParagraphNode);
-                // Prefer no needed period, but exist period
-                if (isNotNeededPeriodMark) {
-                    const { valid, periodMark, index } = checkEndsWithoutPeriodMark(text, periodMarks);
-                    if (valid) {
-                        return;
-                    }
-                    // should be remove period mark
-                    report(ParagraphNode, new RuleError(`Should remove period mark("${periodMark}") at end of list item.`, {
-                        index,
-                        fix: fixer.replaceTextRange([index, index + periodMark.length], "")
-                    }));
-                    return;
-                }
-                // - [link](http://example)
-                // should be ignored
-                if (ignoreLinkEnd) {
-                    const linkNodes = ParagraphNode.children;
-                    if (linkNodes.length === 1 && linkNodes[0].type === Syntax.Link) {
-                        return;
-                    }
-                }
-                const { valid, periodMark, index } = checkEndsWithPeriod(text, {
-                    periodMarks,
-                    allowPeriodMarks,
-                    allowEmoji,
-                });
-                // Prefer to use period
+            // A ListItem should includes child nodes.
+            // https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues/3
+            const paragraphNodes = node.children.filter(node => node.type === Syntax.Paragraph);
+            const firstParagraphNode = paragraphNodes[0];
+            if (!firstParagraphNode) {
+                return;
+            }
+            const text = getSource(firstParagraphNode);
+            // Prefer no needed period, but exist period
+            if (isNotNeededPeriodMark) {
+                const {valid, periodMark, index} = checkEndsWithoutPeriodMark(text, periodMarks);
                 if (valid) {
-                    //  but exist difference period
-                    const isPeriodMarkAtEnd = periodMarks.indexOf(periodMark) !== -1;
-                    // exception case that should not report
-                    // !?
-                    if (!isPeriodMarkAtEnd) {
-                        return;
-                    }
-                    // periodMark is expected, then exit
-                    if (periodMark === preferPeriodMark) {
-                        return;
-                    }
-                    report(ParagraphNode, new RuleError(`Prefer to use period mark("${preferPeriodMark}") at end of list item.`, {
-                        index,
-                        fix: fixer.replaceTextRange([index, index + periodMark.length], preferPeriodMark)
-                    }));
                     return;
-                } else {
-                    // but not exist period
-                    if (forceAppendPeriod) {
-                        report(ParagraphNode, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
-                            index,
-                            fix: fixer.replaceTextRange([index + 1, index + 1], preferPeriodMark)
-                        }));
-                    } else {
-                        report(ParagraphNode, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
-                            index
-                        }))
-                    }
                 }
-            })
+                // should be remove period mark
+                report(firstParagraphNode, new RuleError(`Should remove period mark("${periodMark}") at end of list item.`, {
+                    index,
+                    fix: fixer.replaceTextRange([index, index + periodMark.length], "")
+                }));
+                return;
+            }
+            // - [link](http://example)
+            // should be ignored
+            if (ignoreLinkEnd) {
+                const linkNodes = firstParagraphNode.children;
+                if (linkNodes.length === 1 && linkNodes[0].type === Syntax.Link) {
+                    return;
+                }
+            }
+            const {valid, periodMark, index} = checkEndsWithPeriod(text, {
+                periodMarks,
+                allowPeriodMarks,
+                allowEmoji,
+            });
+            // Prefer to use period
+            if (valid) {
+                //  but exist difference period
+                const isPeriodMarkAtEnd = periodMarks.indexOf(periodMark) !== -1;
+                // exception case that should not report
+                // !?
+                if (!isPeriodMarkAtEnd) {
+                    return;
+                }
+                // periodMark is expected, then exit
+                if (periodMark === preferPeriodMark) {
+                    return;
+                }
+                report(firstParagraphNode, new RuleError(`Prefer to use period mark("${preferPeriodMark}") at end of list item.`, {
+                    index,
+                    fix: fixer.replaceTextRange([index, index + periodMark.length], preferPeriodMark)
+                }));
+            } else {
+                // but not exist period
+                if (forceAppendPeriod) {
+                    report(firstParagraphNode, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
+                        index,
+                        fix: fixer.replaceTextRange([index + 1, index + 1], preferPeriodMark)
+                    }));
+                } else {
+                    report(firstParagraphNode, new RuleError(`Not exist period mark("${preferPeriodMark}") at end of list item.`, {
+                        index
+                    }))
+                }
+            }
         }
     }
 };
