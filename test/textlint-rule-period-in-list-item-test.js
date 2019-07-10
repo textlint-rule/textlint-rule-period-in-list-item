@@ -203,7 +203,7 @@ tester.run("textlint-rule-period-in-list-item", rule, {
         },
         // https://github.com/textlint-rule/textlint-rule-period-in-list-item/issues/3
         {
-            text: `
+            text: `ABC
 - list item 1
 
     A paragraph describing this list item 1.
@@ -219,7 +219,68 @@ tester.run("textlint-rule-period-in-list-item", rule, {
             options: {
                 periodMark: "."
             },
-            errors: [{ line: 2, column: 13 }, { line: 6, column: 13 }, { line: 10, column: 13 }]
+            errors: [{line: 2, column: 13}, {line: 6, column: 13}, {line: 10, column: 13}]
+        },
+        {
+            text: `DEF
+- list item 1
+
+    A paragraph describing this list item 1.
+
+- list item 2
+
+    A paragraph describing this list item 2.
+
+- list item 3
+
+    A paragraph describing this list item 3.
+`,
+            output: `DEF
+- list item 1.
+
+    A paragraph describing this list item 1.
+
+- list item 2.
+
+    A paragraph describing this list item 2.
+
+- list item 3.
+
+    A paragraph describing this list item 3.
+`,
+            options: {
+                periodMark: ".",
+                forceAppendPeriod: true
+            },
+            errors: [{line: 2, column: 13}, {line: 6, column: 13}, {line: 10, column: 13}]
+        },
+        {
+            text:
+                `- list item 1
+    - A paragraph describing this list item 1
+- list item 2
+    - A paragraph describing this list item 2
+- list item 3
+    - A paragraph describing this list item 3`,
+            output:
+                `- list item 1.
+    - A paragraph describing this list item 1.
+- list item 2.
+    - A paragraph describing this list item 2.
+- list item 3.
+    - A paragraph describing this list item 3.`,
+            options: {
+                periodMark: ".",
+                forceAppendPeriod: true
+            },
+            errors: [
+                {line: 1, column: 13},
+                {line: 2, column: 45},
+                {line: 3, column: 13},
+                {line: 4, column: 45},
+                {line: 5, column: 13},
+                {line: 6, column: 45}
+            ]
         },
     ]
 });
