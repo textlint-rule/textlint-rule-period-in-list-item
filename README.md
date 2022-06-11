@@ -1,4 +1,4 @@
-# textlint-rule-period-in-list-item [![Build Status](https://travis-ci.org/textlint-rule/textlint-rule-period-in-list-item.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-period-in-list-item) [![textlint rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/) 
+# textlint-rule-period-in-list-item [![Actions Status: test](https://github.com/textlint-rule/textlint-rule-period-in-list-item.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-period-in-list-item) [![textlint rule](https://img.shields.io/badge/textlint-fixable-green/workflows/test/badge.svg)](https://github.com/textlint-rule/textlint-rule-period-in-list-item.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-period-in-list-item) [![textlint rule](https://img.shields.io/badge/textlint-fixable-green/actions?query=workflow%3A"test") 
 
 textlint rule that check with or without period in list item.
 
