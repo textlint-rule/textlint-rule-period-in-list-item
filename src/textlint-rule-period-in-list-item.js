@@ -1,6 +1,7 @@
 // MIT © 2017 azu
 "use strict";
-const checkEndsWithPeriod = require("check-ends-with-period");
+import { checkEndsWithPeriod } from "check-ends-with-period";
+
 /**
  * check `text` that the end is not periodMark
  * @param {string} text

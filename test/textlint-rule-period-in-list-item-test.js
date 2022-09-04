@@ -1,9 +1,9 @@
 // MIT © 2017 azu
 "use strict";
 import TextLintTester from "textlint-tester";
-const tester = new TextLintTester();
 // rule
-const rule = require("../src/textlint-rule-period-in-list-item");
+import rule from "../src/textlint-rule-period-in-list-item";
+const tester = new TextLintTester();
 // ruleName, rule, { valid, invalid }
 tester.run("textlint-rule-period-in-list-item", rule, {
     valid: [
