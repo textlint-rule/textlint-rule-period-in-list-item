@@ -1583,10 +1583,10 @@ character-reference-invalid@^1.0.0:
   resolved "https://registry.yarnpkg.com/character-reference-invalid/-/character-reference-invalid-1.1.4.tgz#083329cda0eae272ab3dbbf37e9a382c13af1560"
   integrity sha512-mKKUkUbhPpQlCOfIuZkvSEgktjPFIsZKRRbC6KWVEMvlzblj3i3asQv5ODsrwt0N3pHAEvjP8KTQPHkp0+6jOg==
 
-check-ends-with-period@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/check-ends-with-period/-/check-ends-with-period-3.0.0.tgz#d78a0201370435b899e3e3b6faf7a9a008edf1b2"
-  integrity sha512-GfQoFKmICd6HgY+/69QovAT1yuxoYxuAmVRdB81BCl37qtmCGFy7svCKY8D4p/vLIbSp22sjnM7w3PIj0G6RIA==
+check-ends-with-period@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/check-ends-with-period/-/check-ends-with-period-3.0.1.tgz#48b015c1d75e2e60b019207d85a31509f4dfa318"
+  integrity sha512-NMHy7AsIHpW/TjXIe0uxdLoCMEJIIcCz9aN5Z1UXlZCjO7zoTbFFP4mT3xPfk5RguzaQTP+RkvMJETnbXajgrQ==
   dependencies:
     emoji-regex "^10.1.0"
 
